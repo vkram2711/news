@@ -68,7 +68,7 @@ describe("solana-news", () => {
             if(views_per_author.has(author)){
                 views_per_author.set(author, views_per_author.get(author) + 1);
             } else {
-               views_per_author.set(author, 0);
+               views_per_author.set(author, 1);
             }
         }
         console.log(views_per_author)
