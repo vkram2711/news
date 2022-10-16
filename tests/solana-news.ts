@@ -11,7 +11,7 @@ describe("solana-news", () => {
 
     const program = anchor.workspace.SolanaNews as Program<SolanaNews>;
     const author = program.provider.wallet;
-    it('publish article', async () => {
+    it('publish test article', async () => {
         const article = await publishArticle('TEST TITLE', 'TEST CONTENT', program, author.publicKey);
         const articleAccount = await program.account.article.fetch(article.publicKey);
         assert.equal(articleAccount.author.toBase58(), program.provider.wallet.publicKey.toBase58());
@@ -21,7 +21,7 @@ describe("solana-news", () => {
     });
 
     //Create a few article to work with
-    it('publish a lot articles', async() => {
+    it('publish 6 articles', async() => {
         await publishArticle('One', 'Content', program, author.publicKey);
         await publishArticle('Two', 'Content', program, author.publicKey);
         await publishArticle('Three', 'Content', program, author.publicKey);
@@ -31,7 +31,7 @@ describe("solana-news", () => {
     });
 
     //View three random articles
-    it('view random articles', async () => {
+    it('view 3 random articles', async () => {
         for (let i = 0; i < 3; i++) {
             const articles = await program.account.article.all();
             const articleNumber = Math.floor(Math.random() * (articles.length));
@@ -53,6 +53,7 @@ describe("solana-news", () => {
     it('payday', async () => {
         //let's say our platform made 100$ from ads and subscriptions this month
         const bank = 100;
+        //TODO: views must be fetched only for specific period but due to lack of time and to make things simple we will just fetch everything
         const views = await program.account.view.all();
         let views_per_author: Map<string, number> = new Map();
         const overall_views = views.length;
@@ -71,12 +72,9 @@ describe("solana-news", () => {
                views_per_author.set(author, 1);
             }
         }
-        console.log(views_per_author)
         views_per_author.forEach((value, key) => {
             console.log("Author: " + key + " has " + value + " views which is " + (value/overall_views*100) + "% of views this month and revenue:" + (bank*(value/overall_views)) + "$")
         });
-
-
     });
 });
 

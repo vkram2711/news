@@ -71,8 +71,8 @@ pub struct View {
 }
 
 ///We are keeping articles into blockchain for this "concept" code but it will be not really efficient, and it makes sense to store only some id or hash
-///also every article may be considered as NFT with multiple authors/owners/investors(someone payed for investigation/research and now have a right to use this article in any way)
-/// and in addition author may receive payment for citation for example
+///also every article may be considered as NFT with multiple authors/owners/investors(someone paid for investigation/research and now have a right to use this article in any way)
+/// and in addition author may receive rewards for citation
 #[account]
 pub struct Article {
     pub author: Pubkey,
